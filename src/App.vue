@@ -35,4 +35,19 @@ body {
   padding: 0 30px;
   margin: 0 auto;
 }
+
+.btn {
+  display: inline-block;
+  text-align: center;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 15px;
+}
+
+btn:focus {
+  outline: none;
+}
 </style>

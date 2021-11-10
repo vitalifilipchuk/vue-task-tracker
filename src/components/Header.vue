@@ -23,6 +23,7 @@
     header {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         align-self: start;
         margin-bottom: 20px;
     }
