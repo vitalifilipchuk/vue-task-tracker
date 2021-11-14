@@ -11,7 +11,7 @@
         },
         methods: {
             onClick() {
-                
+                this.$emit('btn-click')
             }
         }
     }
