@@ -38,34 +38,36 @@ export default {
     toggleReminder(id) {
       this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task)
     },
-    addTask(task) {
-      this.tasks = [...this.tasks, task]
+    async addTask(task) {
+      const res = await fetch('api/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(task)
+      })
+
+      const data = await res.json()
+      this.tasks = [...this.tasks, data]
     },
     toggleAddTask() {
       this.showAddTask = !this.showAddTask
+    },
+    async fetchTasks() {
+      const res = await fetch('api/tasks')
+
+      const data = await res.json()
+      return data
+    },
+    async fetchTask(id) {
+      const res = await fetch(`api/${id}`)
+
+      const data = await res.json()
+      return data
     }
   },
-  created() {
-    this.tasks = [
-      {
-        id: 1,
-        text: 'Doctors Appointment',
-        day: 'June 12th at 3pm',
-        reminder: true,
-      },
-      {
-        id: 2,
-        text: 'Meeting with friends',
-        day: 'June 15th at 5pm',
-        reminder: true,
-      },
-      {
-        id: 3,
-        text: 'Visiting family',
-        day: 'June 21st at 11:30am',
-        reminder: false,
-      }
-    ]
+  async created() {
+    this.tasks = await this.fetchTasks()
   }
 }
 </script>
