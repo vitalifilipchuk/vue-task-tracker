@@ -1,23 +1,36 @@
 <template>
   <div class="container">
     <Header title="Task Tracker Vue App" />
-    <Tasks :tasks="tasks" />
+    <AddTask />
+    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
   </div>
 </template>
 
 <script>
 import Header from './components/Header'
 import Tasks from './components/Tasks'
+import AddTask from './components/AddTask'
 
 export default {
   name: 'App',
   components: {
     Header,
-    Tasks
+    Tasks,
+    AddTask
   },
   data() {
     return {
       tasks: []
+    }
+  },
+  methods: {
+    deleteTask(id) {
+      if (confirm('Are you sure?')) {
+        this.tasks = this.tasks.filter((task) => task.id !== id)
+      }
+    },
+    toggleReminder(id) {
+      this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task)
     }
   },
   created() {
@@ -73,8 +86,14 @@ body {
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
+  background: #000;
   color: #fff;
   font-size: 15px;
+}
+
+.btn--block {
+  display: block;
+  width: 100%;
 }
 
 btn:focus {
